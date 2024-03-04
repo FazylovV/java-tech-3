@@ -3,32 +3,38 @@ package org.example.model;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class File {
+public class FileElement {
     private String path;
-    private Long size;
-    private Date date;
-    public final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yy HH:mm:ss");
-    public File(String path, Long size, Date date) {
+    private String name;
+    private String date;
+    private String size;
+
+    public FileElement(String name, Long date, Long size, String path) {
+        this.name = name;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yy HH:mm:ss");
+        this.date = dateFormat.format(new Date(date)).toString();
+        if (size == 0) {
+            this.size = "";
+        } else {
+            this.size = size.toString() + " B";
+        }
+
         this.path = path;
-        this.size = size;
-        this.date = date;
+    }
+
+    public String getName() {
+        return size.equals("") ? name + "/" : name;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getSize() {
+        return size;
     }
 
     public String getPath() {
         return path;
-    }
-
-    public Long getSize() {
-        return size;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    @Override
-    public String toString() {
-        String delimeter = " - ";
-        return this.path + delimeter + this.dateFormat.format(this.date) + delimeter + this.size;
     }
 }
